@@ -1,0 +1,194 @@
+\set ECHO none
+select hash_string('', 'crc32');
+ hash_string 
+-------------
+           0
+(1 row)
+
+select hash_string('a', 'crc32');
+ hash_string 
+-------------
+  -390611389
+(1 row)
+
+select hash_string('abcdefg', 'crc32');
+ hash_string 
+-------------
+   824863398
+(1 row)
+
+select hash_string('defg', 'crc32', hash_string('abc', 'crc32'));
+ hash_string 
+-------------
+   824863398
+(1 row)
+
+select hash_string('', 'lookup2');
+ hash_string 
+-------------
+  -863449762
+(1 row)
+
+select hash_string('a', 'lookup2');
+ hash_string 
+-------------
+   542836691
+(1 row)
+
+select hash_string('abcdefg', 'lookup2');
+ hash_string 
+-------------
+ -1528042926
+(1 row)
+
+select hash_string('', 'lookup3');
+ hash_string 
+-------------
+  -559038737
+(1 row)
+
+select hash_string('a', 'lookup3');
+ hash_string 
+-------------
+  1490454280
+(1 row)
+
+select hash_string('abcdefg', 'lookup3');
+ hash_string 
+-------------
+ -1323641691
+(1 row)
+
+select hash_string('', 'lookup3be');
+ hash_string 
+-------------
+  -559038737
+(1 row)
+
+select hash_string('a', 'lookup3be');
+ hash_string 
+-------------
+  -454251968
+(1 row)
+
+select hash_string('abcdefg', 'lookup3be');
+ hash_string 
+-------------
+ -1279733517
+(1 row)
+
+select hash_string('', 'murmur3');
+ hash_string 
+-------------
+           0
+(1 row)
+
+select hash_string('a', 'murmur3');
+ hash_string 
+-------------
+  1009084850
+(1 row)
+
+select hash_string('abcdefg', 'murmur3');
+ hash_string 
+-------------
+ -2009294074
+(1 row)
+
+select hash_int4(0, 'jenkins');
+ hash_int4  
+------------
+ 1800329511
+(1 row)
+
+select hash_int4(12345678, 'jenkins');
+ hash_int4  
+------------
+ -824648931
+(1 row)
+
+select hash_int4(1234567890123456789::int8, 'jenkins');
+ hash_int4  
+------------
+ 1795280340
+(1 row)
+
+select hash_int4(0, 'wang');
+ hash_int4  
+------------
+ -895235421
+(1 row)
+
+select hash_int4(12345678, 'wang');
+ hash_int4  
+------------
+ 2029064838
+(1 row)
+
+select hash_int4(1234567890123456789::int8, 'wang');
+ hash_int4  
+------------
+ 1072559484
+(1 row)
+
+select hash_int4(0, 'wang2');
+  hash_int4  
+-------------
+ -1062647446
+(1 row)
+
+select hash_int4(12345678, 'wang2');
+  hash_int4  
+-------------
+ -1073924033
+(1 row)
+
+select hash_int4(1234567890123456789::int8, 'wang2');
+  hash_int4  
+-------------
+ -1941958315
+(1 row)
+
+select hash_int8(0, 'wang');
+      hash_int8      
+---------------------
+ 8633297058295171728
+(1 row)
+
+select hash_int8(12345678, 'wang');
+      hash_int8       
+----------------------
+ -5256454390535237213
+(1 row)
+
+select hash_int8(1234567890123456789::int8, 'wang');
+      hash_int8      
+---------------------
+ 4369460375527774746
+(1 row)
+
+select hash_int8(0, 'wang8to4');
+ hash_int8 
+-----------
+ 720020139
+(1 row)
+
+select hash_int8(12345678, 'wang8to4');
+ hash_int8  
+------------
+ 1665754234
+(1 row)
+
+select hash_int8(1234567890123456789::int8, 'wang8to4');
+ hash_int8 
+-----------
+ 304567056
+(1 row)
+
+-- make sure conversion to int4 works correctly
+select count(hash_int8(x, 'wang8to4')::int4) from generate_series(1,1000) x;
+ count 
+-------
+  1000
+(1 row)
+
