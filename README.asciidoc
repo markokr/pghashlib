@@ -40,7 +40,7 @@ CPU-independent algorigthms:
 
 CPU-dependent algorigthms:
 
-* `lookup3`     - Jenkins' lookup3
+* `lookup3`     - Jenkins lookup3
 * `pgsql84`     - Hacked version of lookup3, used PostgreSQL 8.4+
 * `murmur3`     - MurmurHash v3
 
