@@ -43,6 +43,7 @@ static const struct StrHashDesc string_hash_list[] = {
 	{ 9, "lookup3le",	hlib_lookup3_hashlittle, 0 },
 	{ 9, "lookup3be",	hlib_lookup3_hashbig,	0 },
 	{ 7, "murmur3",		hlib_murmur3, 0 },
+	{ 7, "pgsql84",		hlib_pgsql84, 0 },
 	{ 5, "crc32",		hlib_crc32, 0 },
 	{ 0 },
 };

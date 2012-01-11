@@ -95,6 +95,24 @@ select hash_string('abcdefg', 'murmur3');
  -2009294074
 (1 row)
 
+select hash_string('', 'pgsql84');
+ hash_string 
+-------------
+ -1477818771
+(1 row)
+
+select hash_string('a', 'pgsql84');
+ hash_string 
+-------------
+  1075015857
+(1 row)
+
+select hash_string('abcdefg', 'pgsql84');
+ hash_string 
+-------------
+   501636814
+(1 row)
+
 select hash_int4(0, 'jenkins');
  hash_int4  
 ------------

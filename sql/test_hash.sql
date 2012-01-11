@@ -24,6 +24,10 @@ select hash_string('', 'murmur3');
 select hash_string('a', 'murmur3');
 select hash_string('abcdefg', 'murmur3');
 
+select hash_string('', 'pgsql84');
+select hash_string('a', 'pgsql84');
+select hash_string('abcdefg', 'pgsql84');
+
 select hash_int4(0, 'jenkins');
 select hash_int4(12345678, 'jenkins');
 select hash_int4(1234567890123456789::int8, 'jenkins');
