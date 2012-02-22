@@ -6,6 +6,7 @@
 PG_MODULE_MAGIC;
 
 PG_FUNCTION_INFO_V1(pg_hash_string);
+PG_FUNCTION_INFO_V1(pg_hash64_string);
 PG_FUNCTION_INFO_V1(pg_hash_int32);
 PG_FUNCTION_INFO_V1(pg_hash_int32from64);
 PG_FUNCTION_INFO_V1(pg_hash_int64);
@@ -152,6 +153,28 @@ pg_hash_string(PG_FUNCTION_ARGS)
 	PG_FREE_IF_COPY(hashname, 1);
 
 	PG_RETURN_INT32(res);
+}
+
+Datum
+pg_hash64_string(PG_FUNCTION_ARGS)
+{
+	struct varlena *data;
+	uint32_t pc;
+	uint32_t pb;
+
+	/* request aligned data on weird architectures */
+#ifdef HLIB_UNALIGNED_READ_OK
+	data = PG_GETARG_VARLENA_PP(0);
+#else
+	data = PG_GETARG_VARLENA_P(0);
+#endif
+
+	/* do hash */
+    hlib_lookup3_hashlittle2(VARDATA_ANY(data), VARSIZE_ANY_EXHDR(data), &pc, &pb);
+
+	PG_FREE_IF_COPY(data, 0);
+
+    return Int64GetDatum(pc + (((uint64_t)pb)<<32));
 }
 
 Datum

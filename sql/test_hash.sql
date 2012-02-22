@@ -28,6 +28,10 @@ select hash_string('', 'pgsql84');
 select hash_string('a', 'pgsql84');
 select hash_string('abcdefg', 'pgsql84');
 
+select hash64_string('');
+select hash64_string('a');
+select hash64_string('abcdefg');
+
 select hash_int4(0, 'jenkins');
 select hash_int4(12345678, 'jenkins');
 select hash_int4(1234567890123456789::int8, 'jenkins');

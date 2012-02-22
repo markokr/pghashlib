@@ -113,6 +113,24 @@ select hash_string('abcdefg', 'pgsql84');
    501636814
 (1 row)
 
+select hash64_string('');
+    hash64_string     
+----------------------
+ -2400912677360645645
+(1 row)
+
+select hash64_string('a');
+    hash64_string     
+----------------------
+ -2705029359294321539
+(1 row)
+
+select hash64_string('abcdefg');
+    hash64_string     
+----------------------
+ -4601425293981179781
+(1 row)
+
 select hash_int4(0, 'jenkins');
  hash_int4  
 ------------
