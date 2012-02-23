@@ -58,6 +58,15 @@ parameters.  Currently `lookup2` default initval is not
 original Jenkins one, but from PostgreSQL 8.3.
 
 
+=== hash64_string ===
+
+------------------------------------------------------------------
+hash64_string(data text, [, initval int4]) returns int8
+hash64_string(data byte, [, initval int4]) returns int8
+------------------------------------------------------------------
+
+Uses Jenkins lookup3/little-endian.
+
 === hash_int4 ===
 
 ----------------------------------

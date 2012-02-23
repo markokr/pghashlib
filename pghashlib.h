@@ -35,11 +35,13 @@ uint32_t hlib_crc32(const void *data, uint32_t len, uint32_t initval);
 uint32_t hlib_lookup2_hash(const void *data, uint32_t len, uint32_t initval);
 uint32_t hlib_lookup3_hashlittle(const void *data, uint32_t len, uint32_t initval);
 uint32_t hlib_lookup3_hashbig(const void *data, uint32_t len, uint32_t initval);
+void     hlib_lookup3_hashlittle2(const void *data, uint32_t len, uint32_t *pc, uint32_t *pb);
 uint32_t hlib_pgsql84(const void *data, uint32_t keylen, uint32_t seed);
 uint32_t hlib_murmur3(const void *data, uint32_t len, uint32_t seed);
 
 /* integer hashes */
 uint32_t hlib_int32_jenkins(uint32_t data);
+uint64_t hlib_int64_jenkins(uint64_t data);
 uint32_t hlib_int32_wang(uint32_t data);
 uint32_t hlib_int32_wang2(uint32_t data);
 uint64_t hlib_int64_wang(uint64_t data);
@@ -47,6 +49,7 @@ uint64_t hlib_int64to32_wang(uint64_t data);
 
 /* SQL function */
 Datum pg_hash_string(PG_FUNCTION_ARGS);
+Datum pg_hash64_string(PG_FUNCTION_ARGS);
 Datum pg_hash_int32(PG_FUNCTION_ARGS);
 Datum pg_hash_int32from64(PG_FUNCTION_ARGS);
 Datum pg_hash_int64(PG_FUNCTION_ARGS);
