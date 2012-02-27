@@ -28,9 +28,9 @@ select hash_string('', 'pgsql84');
 select hash_string('a', 'pgsql84');
 select hash_string('abcdefg', 'pgsql84');
 
-select hash64_string('');
-select hash64_string('a');
-select hash64_string('abcdefg');
+select hash64_string('', 'lookup3le');
+select hash64_string('a', 'lookup3le');
+select hash64_string('abcdefg', 'lookup3le');
 
 select hash_int4(0, 'jenkins');
 select hash_int4(12345678, 'jenkins');

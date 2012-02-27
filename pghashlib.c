@@ -159,8 +159,10 @@ Datum
 pg_hash64_string(PG_FUNCTION_ARGS)
 {
 	struct varlena *data;
-	uint32_t pc;
-	uint32_t pb;
+	text *hashname = PG_GETARG_TEXT_PP(1);
+	uint32_t initval;
+	uint64_t res;
+	const struct StrHashDesc *desc;
 
 	/* request aligned data on weird architectures */
 #ifdef HLIB_UNALIGNED_READ_OK
@@ -169,12 +171,24 @@ pg_hash64_string(PG_FUNCTION_ARGS)
 	data = PG_GETARG_VARLENA_P(0);
 #endif
 
+	/* load hash */
+	desc = find_string_hash(VARDATA_ANY(hashname), VARSIZE_ANY_EXHDR(hashname));
+	if (desc == NULL)
+		err_nohash(hashname);
+
+	/* decide initval */
+	if (PG_NARGS() == 3)
+		initval = PG_GETARG_INT32(2);
+	else
+		initval = desc->initval;
+
 	/* do hash */
-    hlib_lookup3_hashlittle2(VARDATA_ANY(data), VARSIZE_ANY_EXHDR(data), &pc, &pb);
+	res = desc->hash(VARDATA_ANY(data), VARSIZE_ANY_EXHDR(data), initval);
 
 	PG_FREE_IF_COPY(data, 0);
+	PG_FREE_IF_COPY(hashname, 1);
 
-    return Int64GetDatum(pc + (((uint64_t)pb)<<32));
+	PG_RETURN_INT64(res);
 }
 
 Datum

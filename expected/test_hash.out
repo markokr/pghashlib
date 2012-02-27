@@ -113,22 +113,22 @@ select hash_string('abcdefg', 'pgsql84');
    501636814
 (1 row)
 
-select hash64_string('');
-    hash64_string     
-----------------------
- -2400912677360645645
+select hash64_string('', 'lookup3le');
+ hash64_string 
+---------------
+    3735928559
 (1 row)
 
-select hash64_string('a');
-    hash64_string     
-----------------------
- -2705029359294321539
+select hash64_string('a', 'lookup3le');
+    hash64_string    
+---------------------
+ 6351843130003064584
 (1 row)
 
-select hash64_string('abcdefg');
-    hash64_string     
-----------------------
- -4601425293981179781
+select hash64_string('abcdefg', 'lookup3le');
+    hash64_string    
+---------------------
+ 6461572128488215717
 (1 row)
 
 select hash_int4(0, 'jenkins');

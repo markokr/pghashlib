@@ -139,7 +139,7 @@
  * by using the final values of both b and c.  b is perhaps a little less
  * well mixed than c, however.
  */
-uint32_t hlib_pgsql84(const void *data, uint32_t keylen, uint32_t seed)
+uint64_t hlib_pgsql84(const void *data, uint32_t keylen, uint32_t seed)
 {
 	const unsigned char *k = (unsigned char *)data;
 	register uint32 a,
@@ -334,6 +334,6 @@ uint32_t hlib_pgsql84(const void *data, uint32_t keylen, uint32_t seed)
 	final(a, b, c);
 
 	/* report the result */
-	return UInt32GetDatum(c);
+	return ((uint64_t)(b) << 32) | c;
 }
 

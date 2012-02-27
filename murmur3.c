@@ -40,7 +40,7 @@ static inline uint32_t fmix(uint32_t h)
 }
 
 //-----------------------------------------------------------------------------
-uint32_t hlib_murmur3(const void *key, uint32_t len, uint32_t seed)
+uint64_t hlib_murmur3(const void *key, uint32_t len, uint32_t seed)
 {
 	 const uint8_t *data = (const uint8_t *) key;
 	 const int nblocks = len / 4;
