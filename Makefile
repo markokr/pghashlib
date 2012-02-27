@@ -5,17 +5,15 @@ OBJS = $(SRCS:.c=.o)
 REGRESS = test_hash
 DATA = uninstall_hashlib.sql
 DATA_built = hashlib.sql
-DOCS = README.hashlib
 
-EXTRA_CLEAN = README.hashlib README.html
+DOCS = pghashlib.html
+
+EXTRA_CLEAN = pghashlib.html
 
 PGXS = $(shell pg_config --pgxs)
 include $(PGXS)
 
-# docs: rename on install
-install: README.hashlib
-README.hashlib: README.asciidoc
-	cp $< $@
+install: $(DOCS)
 
 test: install
 	make installcheck || { less regression.diffs; exit 1; }
@@ -29,6 +27,8 @@ tags:
 %.s: %.c
 	$(CC) -S -fverbose-asm -o $@ $< $(CFLAGS) $(CPPFLAGS)
 
-html:
-	asciidoc README.asciidoc
+html: pghashlib.html
+
+pghashlib.html: README.rst
+	rst2html $< > $@
 
