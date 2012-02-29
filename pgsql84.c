@@ -139,13 +139,10 @@
  * by using the final values of both b and c.  b is perhaps a little less
  * well mixed than c, however.
  */
-uint64_t hlib_pgsql84(const void *data, size_t keylen, uint64_t seed)
+void hlib_pgsql84(const void *data, size_t keylen, uint64_t *io)
 {
 	const unsigned char *k = (unsigned char *)data;
-	register uint32 a,
-				b,
-				c,
-				len;
+	register uint32_t a, b, c, len;
 
 	/* Set up the internal state */
 	len = keylen;
@@ -334,6 +331,6 @@ uint64_t hlib_pgsql84(const void *data, size_t keylen, uint64_t seed)
 	final(a, b, c);
 
 	/* report the result */
-	return ((uint64_t)(b) << 32) | c;
+	io[0] = ((uint64_t)(b) << 32) | c;
 }
 

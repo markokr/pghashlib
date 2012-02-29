@@ -5,6 +5,7 @@ Files under public domain:
 - lookup2.c
 - lookup3.c
 - murmur3.c
+- spooky.c
 
 Files under PostgreSQL License:
 
@@ -12,6 +13,14 @@ Files under PostgreSQL License:
 - pgsql84.c
 - pghashlib.c
 - pghashlib.h
+
+Files under MIT license:
+
+- city.c
+
+Files under ISC license:
+
+- md5.c
 
 
 PostgreSQL license

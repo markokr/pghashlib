@@ -25,18 +25,26 @@
 #define HLIB_UNALIGNED_READ_OK
 #endif
 
+/* how many values in io array will be used, max */
+#define MAX_IO_VALUES 2
+
 /* hash function signatures */
-typedef uint64_t (*hlib_str_hash_fn)(const void *data, size_t len, uint64_t initval);
+typedef void     (*hlib_str_hash_fn)(const void *data, size_t len, uint64_t *io);
 typedef uint32_t (*hlib_int32_hash_fn)(uint32_t data);
 typedef uint64_t (*hlib_int64_hash_fn)(uint64_t data);
 
 /* string hashes */
-uint64_t hlib_crc32(const void *data, size_t len, uint64_t initval);
-uint64_t hlib_lookup2_hash(const void *data, size_t len, uint64_t initval);
-uint64_t hlib_lookup3_hashlittle(const void *data, size_t len, uint64_t initval);
-uint64_t hlib_lookup3_hashbig(const void *data, size_t len, uint64_t initval);
-uint64_t hlib_pgsql84(const void *data, size_t keylen, uint64_t seed);
-uint64_t hlib_murmur3(const void *data, size_t len, uint64_t seed);
+void hlib_crc32(const void *data, size_t len, uint64_t *io);
+void hlib_lookup2_hash(const void *data, size_t len, uint64_t *io);
+void hlib_lookup3_hashlittle(const void *data, size_t len, uint64_t *io);
+void hlib_lookup3_hashbig(const void *data, size_t len, uint64_t *io);
+void hlib_pgsql84(const void *data, size_t len, uint64_t *io);
+void hlib_murmur3(const void *data, size_t len, uint64_t *io);
+
+void hlib_cityhash64(const void *data, size_t len, uint64_t *io);
+void hlib_cityhash128(const void *data, size_t len, uint64_t *io);
+void hlib_spookyhash(const void *data, size_t len, uint64_t *io);
+void hlib_md5(const void *data, size_t len, uint64_t *io);
 
 /* integer hashes */
 uint32_t hlib_int32_jenkins(uint32_t data);
@@ -49,6 +57,7 @@ uint64_t hlib_int64to32_wang(uint64_t data);
 /* SQL function */
 Datum pg_hash_string(PG_FUNCTION_ARGS);
 Datum pg_hash64_string(PG_FUNCTION_ARGS);
+Datum pg_hash128_string(PG_FUNCTION_ARGS);
 Datum pg_hash_int32(PG_FUNCTION_ARGS);
 Datum pg_hash_int32from64(PG_FUNCTION_ARGS);
 Datum pg_hash_int64(PG_FUNCTION_ARGS);

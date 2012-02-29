@@ -23,6 +23,12 @@ select hash_string('defg', 'crc32', hash_string('abc', 'crc32'));
    824863398
 (1 row)
 
+select encode(hash128_string('abcdefg', 'crc32'), 'hex');
+              encode              
+----------------------------------
+ a66a2a31000000000000000000000000
+(1 row)
+
 select hash_string('', 'lookup2');
  hash_string 
 -------------
@@ -39,6 +45,12 @@ select hash_string('abcdefg', 'lookup2');
  hash_string 
 -------------
  -1528042926
+(1 row)
+
+select encode(hash128_string('abcdefg', 'lookup2'), 'hex');
+              encode              
+----------------------------------
+ 2c76e6b9ef60e9610000000000000000
 (1 row)
 
 select hash_string('', 'lookup3');
@@ -77,6 +89,12 @@ select hash_string('abcdefg', 'lookup3be');
  -1279733517
 (1 row)
 
+select encode(hash128_string('abcdefg', 'lookup3be'), 'hex');
+              encode              
+----------------------------------
+ f3d0b8b3ab7b723f0000000000000000
+(1 row)
+
 select hash_string('', 'murmur3');
  hash_string 
 -------------
@@ -93,6 +111,12 @@ select hash_string('abcdefg', 'murmur3');
  hash_string 
 -------------
  -2009294074
+(1 row)
+
+select encode(hash128_string('abcdefg', 'murmur3'), 'hex');
+              encode              
+----------------------------------
+ 069b3c88000000000000000000000000
 (1 row)
 
 select hash_string('', 'pgsql84');
@@ -113,10 +137,16 @@ select hash_string('abcdefg', 'pgsql84');
    501636814
 (1 row)
 
+select encode(hash128_string('abcdefg', 'pgsql84'), 'hex');
+              encode              
+----------------------------------
+ ce5ee61dcf458aaa0000000000000000
+(1 row)
+
 select hash64_string('', 'lookup3le');
- hash64_string 
----------------
-    3735928559
+    hash64_string     
+----------------------
+ -2401053088876216593
 (1 row)
 
 select hash64_string('a', 'lookup3le');
@@ -131,6 +161,136 @@ select hash64_string('abcdefg', 'lookup3le');
  6461572128488215717
 (1 row)
 
+select encode(hash128_string('abcdefg', 'lookup3le'), 'hex');
+              encode              
+----------------------------------
+ a5d41ab19d1dac590000000000000000
+(1 row)
+
+select hash64_string('', 'city64');
+    hash64_string     
+----------------------
+ -7286425919675154353
+(1 row)
+
+select hash64_string('a', 'city64');
+    hash64_string    
+---------------------
+ 2603192927274642682
+(1 row)
+
+select hash64_string('abcdefg', 'city64');
+    hash64_string     
+----------------------
+ -9081257160914143494
+(1 row)
+
+select encode(hash128_string('abcdefg', 'city64'), 'hex');
+              encode              
+----------------------------------
+ fa76bd09bae4f8810000000000000000
+(1 row)
+
+select hash64_string('', 'city128');
+    hash64_string    
+---------------------
+ 4463240938071824939
+(1 row)
+
+select hash64_string('a', 'city128');
+    hash64_string     
+----------------------
+ -3282779286773163312
+(1 row)
+
+select hash64_string('abcdefg', 'city128');
+    hash64_string    
+---------------------
+ 6752956416143810332
+(1 row)
+
+select encode(hash128_string('abcdefg', 'city128'), 'hex');
+              encode              
+----------------------------------
+ 1c5ff2ef1452b75d0b491c5915448fc4
+(1 row)
+
+select hash64_string('', 'spooky');
+    hash64_string    
+---------------------
+ 8819735582944171500
+(1 row)
+
+select hash64_string('a', 'spooky');
+    hash64_string     
+----------------------
+ -2619323016173754639
+(1 row)
+
+select hash64_string('abcdefg', 'spooky');
+    hash64_string    
+---------------------
+ 1147919704542617658
+(1 row)
+
+select encode(hash128_string('abcdefg', 'spooky'), 'hex');
+              encode              
+----------------------------------
+ 3a20efabe33aee0f6c97f37f73a0ca22
+(1 row)
+
+SELECT encode(hash128_string('', 'md5'), 'hex');
+              encode              
+----------------------------------
+ d41d8cd98f00b204e9800998ecf8427e
+(1 row)
+
+-- d41d8cd98f00b204e9800998ecf8427e
+SELECT encode(hash128_string('a', 'md5'), 'hex');
+              encode              
+----------------------------------
+ 0cc175b9c0f1b6a831c399e269772661
+(1 row)
+
+-- 0cc175b9c0f1b6a831c399e269772661
+SELECT encode(hash128_string('abc', 'md5'), 'hex');
+              encode              
+----------------------------------
+ 900150983cd24fb0d6963f7d28e17f72
+(1 row)
+
+-- 900150983cd24fb0d6963f7d28e17f72
+SELECT encode(hash128_string('message digest', 'md5'), 'hex');
+              encode              
+----------------------------------
+ f96b697d7cb7938d525a2f31aaf161d0
+(1 row)
+
+-- f96b697d7cb7938d525a2f31aaf161d0
+SELECT encode(hash128_string('abcdefghijklmnopqrstuvwxyz', 'md5'), 'hex');
+              encode              
+----------------------------------
+ c3fcd3d76192e4007dfb496cca67e13b
+(1 row)
+
+-- c3fcd3d76192e4007dfb496cca67e13b
+SELECT encode(hash128_string('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 'md5'), 'hex');
+              encode              
+----------------------------------
+ d174ab98d277d9f5a5611c2c9f419d9f
+(1 row)
+
+-- d174ab98d277d9f5a5611c2c9f419d9f
+SELECT encode(hash128_string('12345678901234567890123456789012345678901234567890123456789012345678901234567890', 'md5'), 'hex');
+              encode              
+----------------------------------
+ 57edf4a22be3c955ac49da2e2107b67a
+(1 row)
+
+-- 57edf4a22be3c955ac49da2e2107b67a
+--
+-- integer hashes
+--
 select hash_int4(0, 'jenkins');
  hash_int4  
 ------------
@@ -227,4 +387,19 @@ select count(hash_int8(x, 'wang8to4')::int4) from generate_series(1,1000) x;
 -------
   1000
 (1 row)
+
+select x, hash_int4(x + 6, 'wang') from generate_series(1, 10) x order by hash_int4(x + 1, 'jenkins');
+ x  |  hash_int4  
+----+-------------
+  8 |   129441304
+  1 | -2082796792
+  5 |  -683714806
+  6 |  -502655605
+  4 |  -865077273
+ 10 |   761386772
+  3 | -1180905538
+  2 | -1766822010
+  9 |   984906997
+  7 |   352851687
+(10 rows)
 

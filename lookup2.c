@@ -77,7 +77,7 @@ acceptable.  Do NOT use for cryptographic purposes.
 --------------------------------------------------------------------
 */
 
-uint64_t hlib_lookup2_hash(const void *data, size_t length, uint64_t initval)
+void hlib_lookup2_hash(const void *data, size_t length, uint64_t *io)
 {
    const uint8_t *k = data;
    uint32_t a,b,c,len;
@@ -85,7 +85,7 @@ uint64_t hlib_lookup2_hash(const void *data, size_t length, uint64_t initval)
    /* Set up the internal state */
    len = length;
    a = b = 0x9e3779b9;  /* the golden ratio; an arbitrary value */
-   c = initval;         /* the previous hash value */
+   c = io[0];           /* the previous hash value */
 
    /*---------------------------------------- handle most of the key */
    while (len >= 12)
@@ -117,6 +117,6 @@ uint64_t hlib_lookup2_hash(const void *data, size_t length, uint64_t initval)
    }
    mix(a,b,c);
    /*-------------------------------------------- report the result */
-   return ((uint64_t)(b) << 32) | c;
+   io[0] = ((uint64_t)(b) << 32) | c;
 }
 

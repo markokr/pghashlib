@@ -33,7 +33,7 @@ hash_string
   hash_string(data text,  algo text [, initval int4]) returns int4
   hash_string(data bytea, algo text [, initval int4]) returns int4
 
-This hashes the data with specified algorithm.
+This hashes the data with specified algorithm, returns 32-bit result.
 
 
 hash64_string
@@ -45,6 +45,16 @@ hash64_string
   hash64_string(data byte, algo text, [, initval int4]) returns int8
 
 Uses same algorithms as `hash_string()` but returns 64-bit result.
+
+hash128_string
+~~~~~~~~~~~~~~
+
+::
+
+  hash64_string(data text, algo text, [, initval int4]) returns int8
+  hash64_string(data byte, algo text, [, initval int4]) returns int8
+
+Uses same algorithms as `hash_string()` but returns 128-bit result.
 
 
 hash_int4
@@ -66,7 +76,8 @@ Supported aldorithms:
 hash_int8
 ~~~~~~~~~
 
-..
+::
+
   hash_int8(val int8) returns int8
 
 Reversible integer hash.
@@ -86,15 +97,19 @@ String hashing algorithms
 List of currently provided algorithms.
 
 ==============  =========  ======  =======  ==============================
- Algorithm      CPU-indep  64-bit  Partial  Description
+ Algorithm      CPU-indep   Bits   Partial  Description
 ==============  =========  ======  =======  ==============================
- lookup2         no         yes     no       Jenkins lookup2
- lookup3         no         yes     no       Jenkins lookup3 CPU-native
- lookup3le       yes        yes     no       Jenkins lookup3 little-endian
- lookup3be       yes        yes     no       Jenkins lookup3 big-endian
- pgsql84         no         yes     no       Hacked lookup3 in Postgres 8.4+
- murmur3         no         no      no       MurmurHash v3, 32-bit variant
- crc32           yes        no      yes      CRC32
+ city64          no          64      no      CityHash64
+ city128         no         128      no      CityHash128
+ crc32           yes         32     yes      CRC32
+ lookup2         no          64      no      Jenkins lookup2
+ lookup3be       yes         64      no      Jenkins lookup3 big-endian
+ lookup3le       yes         64      no      Jenkins lookup3 little-endian
+ lookup3         no          64      no      Jenkins lookup3 CPU-native
+ murmur3         no          32      no      MurmurHash v3, 32-bit variant
+ md5             yes        128      no      MD5
+ pgsql84         no          64      no      Hacked lookup3 in Postgres 8.4+
+ spooky          no         128      no      SpookyHash
 ==============  =========  ======  =======  ==============================
 
 CPU-independence
@@ -102,9 +117,10 @@ CPU-independence
   hash result is different on little-endian machines (x86)
   and big-endian machines (sparc).
 
-64-bit output
-  Whether hash can output 64-bit result.  If not, then `hash64_string()`
-  simply returns 32-bit value.
+Bits
+  Maximum number of output bits that hash can output.
+  If longer result is requested, result will be
+  zero-padded.
 
 Partial hashing
   Whether long string can be hashed in smaller parts, by giving last

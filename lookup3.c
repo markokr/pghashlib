@@ -167,12 +167,12 @@ acceptable.  Do NOT use for cryptographic purposes.
 -------------------------------------------------------------------------------
 */
 
-uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initval)
+void hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t *io)
 {
   uint32_t a,b,c;                                          /* internal state */
 
   /* Set up the internal state */
-  a = b = c = 0xdeadbeef + ((uint32_t)length) + initval;
+  a = b = c = 0xdeadbeef + ((uint32_t)length) + (uint32_t)io[0];
 
   if (HASH_LITTLE_ENDIAN && ((((unsigned long)key) & 0x3) == 0)) {
     const uint32_t *k = (const uint32_t *)key;         /* read 32-bit chunks */
@@ -217,7 +217,7 @@ uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initva
     case 3 : a+=k[0]&0xffffff; break;
     case 2 : a+=k[0]&0xffff; break;
     case 1 : a+=k[0]&0xff; break;
-    case 0 : return c;              /* zero length strings require no mixing */
+    case 0 : goto done;              /* zero length strings require no mixing */
     }
 
 #else /* make valgrind happy */
@@ -237,7 +237,7 @@ uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initva
     case 3 : a+=((uint32_t)k8[2])<<16;   /* fall through */
     case 2 : a+=((uint32_t)k8[1])<<8;    /* fall through */
     case 1 : a+=k8[0]; break;
-    case 0 : return c;
+    case 0 : goto done;
     }
 
 #endif /* !valgrind */
@@ -286,7 +286,7 @@ uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initva
              break;
     case 1 : a+=k8[0];
              break;
-    case 0 : return c;                     /* zero length requires no mixing */
+    case 0 : goto done;                     /* zero length requires no mixing */
     }
 
   } else {                        /* need to read the key one byte at a time */
@@ -328,12 +328,13 @@ uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initva
     case 2 : a+=((uint32_t)k[1])<<8;
     case 1 : a+=k[0];
              break;
-    case 0 : return c;
+    case 0 : goto done;
     }
   }
 
   final(a,b,c);
-  return ((uint64_t)(b) << 32) | c;
+done:
+  io[0] = ((uint64_t)(b) << 32) | c;
 }
 
 
@@ -343,12 +344,12 @@ uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initva
  * from hashlittle() on all machines.  hashbig() takes advantage of
  * big-endian byte ordering.
  */
-uint64_t hlib_lookup3_hashbig(const void *key, size_t length, uint64_t initval)
+void hlib_lookup3_hashbig(const void *key, size_t length, uint64_t *io)
 {
   uint32_t a,b,c;
 
   /* Set up the internal state */
-  a = b = c = 0xdeadbeef + ((uint32_t)length) + initval;
+  a = b = c = 0xdeadbeef + ((uint32_t)length) + (uint32_t)io[0];
 
   if (HASH_BIG_ENDIAN && ((((unsigned long)key) & 0x3) == 0)) {
     const uint32_t *k = (const uint32_t *)key;         /* read 32-bit chunks */
@@ -393,7 +394,7 @@ uint64_t hlib_lookup3_hashbig(const void *key, size_t length, uint64_t initval)
     case 3 : a+=k[0]&0xffffff00; break;
     case 2 : a+=k[0]&0xffff0000; break;
     case 1 : a+=k[0]&0xff000000; break;
-    case 0 : return c;              /* zero length strings require no mixing */
+    case 0 : goto done;              /* zero length strings require no mixing */
     }
 
 #else  /* make valgrind happy */
@@ -413,7 +414,7 @@ uint64_t hlib_lookup3_hashbig(const void *key, size_t length, uint64_t initval)
     case 3 : a+=((uint32_t)k8[2])<<8;   /* fall through */
     case 2 : a+=((uint32_t)k8[1])<<16;  /* fall through */
     case 1 : a+=((uint32_t)k8[0])<<24; break;
-    case 0 : return c;
+    case 0 : goto done;
     }
 
 #endif /* !VALGRIND */
@@ -457,12 +458,13 @@ uint64_t hlib_lookup3_hashbig(const void *key, size_t length, uint64_t initval)
     case 2 : a+=((uint32_t)k[1])<<16;
     case 1 : a+=((uint32_t)k[0])<<24;
              break;
-    case 0 : return c;
+    case 0 : goto done;
     }
   }
 
   final(a,b,c);
-  return ((uint64_t)(b) << 32) | c;
+done:
+  io[0] = ((uint64_t)(b) << 32) | c;
 }
 
 

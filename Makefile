@@ -1,10 +1,13 @@
 
 MODULE_big = hashlib
-SRCS = pghashlib.c crc32.c lookup2.c lookup3.c inthash.c murmur3.c pgsql84.c
+SRCS = pghashlib.c crc32.c lookup2.c lookup3.c inthash.c murmur3.c \
+       pgsql84.c city.c spooky.c md5.c
 OBJS = $(SRCS:.c=.o)
 REGRESS = test_hash
 DATA = uninstall_hashlib.sql
 DATA_built = hashlib.sql
+
+PG_CPPFLAGS = -msse4
 
 DOCS = pghashlib.html
 
@@ -16,7 +19,7 @@ include $(PGXS)
 install: $(DOCS)
 
 test: install
-	make installcheck || { less regression.diffs; exit 1; }
+	make installcheck || { filterdiff --format=unified regression.diffs | less; exit 1; }
 
 ack:
 	cp results/*.out expected/
@@ -25,7 +28,7 @@ tags:
 	cscope -I . -b -f .cscope.out *.c
 
 %.s: %.c
-	$(CC) -S -fverbose-asm -o $@ $< $(CFLAGS) $(CPPFLAGS)
+	$(CC) -S -fverbose-asm -o - $< $(CFLAGS) $(CPPFLAGS) | cleanasm > $@
 
 html: pghashlib.html
 
