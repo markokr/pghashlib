@@ -77,7 +77,7 @@ acceptable.  Do NOT use for cryptographic purposes.
 --------------------------------------------------------------------
 */
 
-uint64_t hlib_lookup2_hash(const void *data, unsigned length, uint32_t initval)
+uint64_t hlib_lookup2_hash(const void *data, size_t length, uint64_t initval)
 {
    const uint8_t *k = data;
    uint32_t a,b,c,len;

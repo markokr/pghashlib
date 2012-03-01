@@ -82,7 +82,7 @@ static const uint32_t crc32tab[256] = {
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
 };
 
-uint64_t hlib_crc32(const void *data, unsigned size, uint32_t initval)
+uint64_t hlib_crc32(const void *data, size_t size, uint64_t initval)
 {
 	const uint8_t *ptr = data;
 	uint32_t crc = ~initval;

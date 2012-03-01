@@ -160,7 +160,7 @@ pg_hash64_string(PG_FUNCTION_ARGS)
 {
 	struct varlena *data;
 	text *hashname = PG_GETARG_TEXT_PP(1);
-	uint32_t initval;
+	uint64_t initval;
 	uint64_t res;
 	const struct StrHashDesc *desc;
 
@@ -178,7 +178,7 @@ pg_hash64_string(PG_FUNCTION_ARGS)
 
 	/* decide initval */
 	if (PG_NARGS() == 3)
-		initval = PG_GETARG_INT32(2);
+		initval = PG_GETARG_INT64(2);
 	else
 		initval = desc->initval;
 

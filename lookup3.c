@@ -167,7 +167,7 @@ acceptable.  Do NOT use for cryptographic purposes.
 -------------------------------------------------------------------------------
 */
 
-uint64_t hlib_lookup3_hashlittle(const void *key, unsigned length, uint32_t initval)
+uint64_t hlib_lookup3_hashlittle(const void *key, size_t length, uint64_t initval)
 {
   uint32_t a,b,c;                                          /* internal state */
 
@@ -343,7 +343,7 @@ uint64_t hlib_lookup3_hashlittle(const void *key, unsigned length, uint32_t init
  * from hashlittle() on all machines.  hashbig() takes advantage of
  * big-endian byte ordering.
  */
-uint64_t hlib_lookup3_hashbig(const void *key, unsigned length, uint32_t initval)
+uint64_t hlib_lookup3_hashbig(const void *key, size_t length, uint64_t initval)
 {
   uint32_t a,b,c;
 
