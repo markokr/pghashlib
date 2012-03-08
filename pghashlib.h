@@ -49,8 +49,8 @@ void hlib_md5(const void *data, size_t len, uint64_t *io);
 /* integer hashes */
 uint32_t hlib_int32_jenkins(uint32_t data);
 uint64_t hlib_int64_jenkins(uint64_t data);
-uint32_t hlib_int32_wang(uint32_t data);
-uint32_t hlib_int32_wang2(uint32_t data);
+uint32_t hlib_wang32(uint32_t data);
+uint32_t hlib_wang32mult(uint32_t data);
 uint64_t hlib_int64_wang(uint64_t data);
 uint64_t hlib_int64to32_wang(uint64_t data);
 

@@ -64,13 +64,7 @@ hash_int4
 
   hash_int4(val int4) returns int4
 
-Reversible integer hash.
-
-Supported aldorithms:
-
-* `jenkins` - Jenkins integer hash with 6 shifts
-* `wang`    - Thomas Wang's hash32shift()
-* `wang2`   - Thomas Wang's hash32shiftmult()
+Hash 32-bit integer.
 
 
 hash_int8
@@ -80,14 +74,7 @@ hash_int8
 
   hash_int8(val int8) returns int8
 
-Reversible integer hash.
-
-Supported algorithms:
-
-* `wang`     - Thomas Wang's hash64shift()
-* `wang8to4` - Thomas Wang's hash6432shift(),
-  creates 32bit hash from 64bit integer.  The result can be
-  safely cast to int4.
+Hash 64-bit integer.
 
 
 
@@ -126,6 +113,25 @@ Partial hashing
   Whether long string can be hashed in smaller parts, by giving last
   value as initval to next hash call.
 
+Integer hashing algorithms
+--------------------------
+
+==============  ======  ================================  ============================
+ Algorithm       Bits    Description                       Notes
+==============  ======  ================================  ============================
+ wang32           32     Thomas Wang hash32shift
+ wang32mult       32     Thomas Wang hash32shiftmult
+ jenkins          32     Bob Jenkins hash with 6 shifts
+ wang64           64     Thomas Wang hash64shift
+ wang64to32       64     Thomas Wang hash6432shift         Result can be cast to int4
+==============  ======  ================================  ============================
+
+All algorithms here have the property that they are "reversible",
+that means there is 1:1 mapping between input and output.
+
+This propery is useful for creating well-defined "random" sort order over
+unique integer id's.  Or picking up random row from table
+with unique id's.
 
 
 Links

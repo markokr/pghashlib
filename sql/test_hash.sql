@@ -77,26 +77,26 @@ select hash_int4(0, 'jenkins');
 select hash_int4(12345678, 'jenkins');
 select hash_int4(1234567890123456789::int8, 'jenkins');
 
-select hash_int4(0, 'wang');
-select hash_int4(12345678, 'wang');
-select hash_int4(1234567890123456789::int8, 'wang');
+select hash_int4(0, 'wang32');
+select hash_int4(12345678, 'wang32');
+select hash_int4(1234567890123456789::int8, 'wang32');
 
-select hash_int4(0, 'wang2');
-select hash_int4(12345678, 'wang2');
-select hash_int4(1234567890123456789::int8, 'wang2');
+select hash_int4(0, 'wang32mult');
+select hash_int4(12345678, 'wang32mult');
+select hash_int4(1234567890123456789::int8, 'wang32mult');
 
-select hash_int8(0, 'wang');
-select hash_int8(12345678, 'wang');
-select hash_int8(1234567890123456789::int8, 'wang');
+select hash_int8(0, 'wang64');
+select hash_int8(12345678, 'wang64');
+select hash_int8(1234567890123456789::int8, 'wang64');
 
-select hash_int8(0, 'wang8to4');
-select hash_int8(12345678, 'wang8to4');
-select hash_int8(1234567890123456789::int8, 'wang8to4');
+select hash_int8(0, 'wang64to32');
+select hash_int8(12345678, 'wang64to32');
+select hash_int8(1234567890123456789::int8, 'wang64to32');
 
 -- make sure conversion to int4 works correctly
-select count(hash_int8(x, 'wang8to4')::int4) from generate_series(1,1000) x;
+select count(hash_int8(x, 'wang64to32')::int4) from generate_series(1,1000) x;
 
 
-select x, hash_int4(x + 6, 'wang') from generate_series(1, 10) x order by hash_int4(x + 1, 'jenkins');
+select x, hash_int4(x + 6, 'jenkins') from generate_series(1, 10) x order by hash_int4(x + 6, 'jenkins');
 
 

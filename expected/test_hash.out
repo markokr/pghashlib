@@ -309,97 +309,97 @@ select hash_int4(1234567890123456789::int8, 'jenkins');
  1795280340
 (1 row)
 
-select hash_int4(0, 'wang');
+select hash_int4(0, 'wang32');
  hash_int4  
 ------------
  -895235421
 (1 row)
 
-select hash_int4(12345678, 'wang');
+select hash_int4(12345678, 'wang32');
  hash_int4  
 ------------
  2029064838
 (1 row)
 
-select hash_int4(1234567890123456789::int8, 'wang');
+select hash_int4(1234567890123456789::int8, 'wang32');
  hash_int4  
 ------------
  1072559484
 (1 row)
 
-select hash_int4(0, 'wang2');
+select hash_int4(0, 'wang32mult');
   hash_int4  
 -------------
  -1062647446
 (1 row)
 
-select hash_int4(12345678, 'wang2');
+select hash_int4(12345678, 'wang32mult');
   hash_int4  
 -------------
  -1073924033
 (1 row)
 
-select hash_int4(1234567890123456789::int8, 'wang2');
+select hash_int4(1234567890123456789::int8, 'wang32mult');
   hash_int4  
 -------------
  -1941958315
 (1 row)
 
-select hash_int8(0, 'wang');
+select hash_int8(0, 'wang64');
       hash_int8      
 ---------------------
  8633297058295171728
 (1 row)
 
-select hash_int8(12345678, 'wang');
+select hash_int8(12345678, 'wang64');
       hash_int8       
 ----------------------
  -5256454390535237213
 (1 row)
 
-select hash_int8(1234567890123456789::int8, 'wang');
+select hash_int8(1234567890123456789::int8, 'wang64');
       hash_int8      
 ---------------------
  4369460375527774746
 (1 row)
 
-select hash_int8(0, 'wang8to4');
+select hash_int8(0, 'wang64to32');
  hash_int8 
 -----------
  720020139
 (1 row)
 
-select hash_int8(12345678, 'wang8to4');
+select hash_int8(12345678, 'wang64to32');
  hash_int8  
 ------------
  1665754234
 (1 row)
 
-select hash_int8(1234567890123456789::int8, 'wang8to4');
+select hash_int8(1234567890123456789::int8, 'wang64to32');
  hash_int8 
 -----------
  304567056
 (1 row)
 
 -- make sure conversion to int4 works correctly
-select count(hash_int8(x, 'wang8to4')::int4) from generate_series(1,1000) x;
+select count(hash_int8(x, 'wang64to32')::int4) from generate_series(1,1000) x;
  count 
 -------
   1000
 (1 row)
 
-select x, hash_int4(x + 6, 'wang') from generate_series(1, 10) x order by hash_int4(x + 1, 'jenkins');
+select x, hash_int4(x + 6, 'jenkins') from generate_series(1, 10) x order by hash_int4(x + 6, 'jenkins');
  x  |  hash_int4  
 ----+-------------
-  8 |   129441304
-  1 | -2082796792
-  5 |  -683714806
-  6 |  -502655605
-  4 |  -865077273
- 10 |   761386772
-  3 | -1180905538
-  2 | -1766822010
-  9 |   984906997
-  7 |   352851687
+  7 | -1978921976
+  6 | -1567819279
+  3 | -1246105791
+  9 |  -327522260
+  1 |  -204548256
+ 10 |   425555844
+  5 |   833732939
+  4 |  1712784324
+  8 |  1734807528
+  2 |  1831203572
 (10 rows)
 

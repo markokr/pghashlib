@@ -18,7 +18,7 @@ uint32_t hlib_int32_jenkins(uint32_t a)
 	return a;
 }
 
-uint32_t hlib_int32_wang(uint32_t key)
+uint32_t hlib_wang32(uint32_t key)
 {
 	key = ~key + (key << 15);
 	key = key ^ (key >> 12);
@@ -29,7 +29,7 @@ uint32_t hlib_int32_wang(uint32_t key)
 	return key;
 }
 
-uint32_t hlib_int32_wang2(uint32_t key)
+uint32_t hlib_wang32mult(uint32_t key)
 {
 	key = (key ^ 61) ^ (key >> 16);
 	key = key + (key << 3);
@@ -60,6 +60,6 @@ uint64_t hlib_int64to32_wang(uint64_t key)
 	key = key + (key << 6);
 	key = key ^ (key >> 22);
 	/* map it to signed int8 to allow conversion to int4 */
-	return (int64)(int32)key;
+	return (int64_t)(int32_t)key;
 }
 

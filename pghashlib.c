@@ -16,22 +16,24 @@ PG_FUNCTION_INFO_V1(pg_hash_int64);
  * Algorithm data
  */
 
+#define HASHNAMELEN 12
+
 struct StrHashDesc {
 	int namelen;
-	const char name[12];
+	const char name[HASHNAMELEN];
 	hlib_str_hash_fn hash;
 	uint64_t initval;
 };
 
 struct Int32HashDesc {
 	int namelen;
-	const char name[12];
+	const char name[HASHNAMELEN];
 	hlib_int32_hash_fn hash;
 };
 
 struct Int64HashDesc {
 	int namelen;
-	const char name[12];
+	const char name[HASHNAMELEN];
 	hlib_int64_hash_fn hash;
 };
 
@@ -55,15 +57,15 @@ static const struct StrHashDesc string_hash_list[] = {
 };
 
 static const struct Int32HashDesc int32_hash_list[] = {
-	{ 4, "wang",		hlib_int32_wang },
-	{ 5, "wang2",		hlib_int32_wang2 },
+	{ 6, "wang32",		hlib_wang32 },
+	{ 10, "wang32mult",	hlib_wang32mult },
 	{ 7, "jenkins",		hlib_int32_jenkins },
 	{ 0 },
 };
 
 static const struct Int64HashDesc int64_hash_list[] = {
-	{ 4, "wang",		hlib_int64_wang },
-	{ 8, "wang8to4",	hlib_int64to32_wang },
+	{ 6, "wang64",		hlib_int64_wang },
+	{ 10, "wang64to32",	hlib_int64to32_wang },
 	{ 0 },
 };
 
@@ -75,6 +77,13 @@ static const struct StrHashDesc *
 find_string_hash(const char *name, unsigned nlen)
 {
 	const struct StrHashDesc *desc;
+	char buf[HASHNAMELEN];
+
+	if (nlen >= HASHNAMELEN)
+		return NULL;
+	memset(buf, 0, sizeof(buf));
+	memcpy(buf, name, nlen);
+
 	for (desc = string_hash_list; desc->namelen; desc++) {
 		if (desc->namelen != nlen)
 			continue;
@@ -90,7 +99,14 @@ static const struct Int32HashDesc *
 find_int32_hash(const char *name, unsigned nlen)
 {
 	const struct Int32HashDesc *desc;
-	for (desc = int32_hash_list; desc->name; desc++) {
+	char buf[HASHNAMELEN];
+
+	if (nlen >= HASHNAMELEN)
+		return NULL;
+	memset(buf, 0, sizeof(buf));
+	memcpy(buf, name, nlen);
+
+	for (desc = int32_hash_list; desc->namelen; desc++) {
 		if (desc->namelen == nlen && !memcmp(desc->name, name, nlen))
 			return desc;
 	}
@@ -101,7 +117,14 @@ static const struct Int64HashDesc *
 find_int64_hash(const char *name, unsigned nlen)
 {
 	const struct Int64HashDesc *desc;
-	for (desc = int64_hash_list; desc->name; desc++) {
+	char buf[HASHNAMELEN];
+
+	if (nlen >= HASHNAMELEN)
+		return NULL;
+	memset(buf, 0, sizeof(buf));
+	memcpy(buf, name, nlen);
+
+	for (desc = int64_hash_list; desc->namelen; desc++) {
 		if (desc->namelen == nlen && !memcmp(desc->name, name, nlen))
 			return desc;
 	}
