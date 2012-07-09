@@ -9,8 +9,8 @@ SRCS = src/pghashlib.c src/crc32.c src/lookup2.c src/lookup3.c src/inthash.c \
 OBJS = $(SRCS:.c=.o)
 EXTENSION = $(MODULE_big)
 
-DOCS = pghashlib.html
-EXTRA_CLEAN = pghashlib.html
+DOCS = hashlib.html
+EXTRA_CLEAN = hashlib.html
 
 REGRESS_OPTS = --inputdir=test
 
@@ -49,8 +49,8 @@ tags:
 %.s: %.c
 	$(CC) -S -fverbose-asm -o - $< $(CFLAGS) $(CPPFLAGS) | cleanasm > $@
 
-html: pghashlib.html
+html: hashlib.html
 
-pghashlib.html: README.rst
+hashlib.html: README.rst
 	$(RST2HTML) $< > $@
 
