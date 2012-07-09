@@ -1,8 +1,4 @@
 
-\set ECHO none
-\i hashlib.sql
-\set ECHO all
-
 select hash_string('', 'crc32');
 select hash_string('a', 'crc32');
 select hash_string('abcdefg', 'crc32');

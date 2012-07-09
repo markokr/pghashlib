@@ -1,20 +1,37 @@
+# configurable variables
 PG_CONFIG = pg_config
 RST2HTML = rst2html
 
+# module description
 MODULE_big = hashlib
 SRCS = src/pghashlib.c src/crc32.c src/lookup2.c src/lookup3.c src/inthash.c \
        src/murmur3.c src/pgsql84.c src/city.c src/spooky.c src/md5.c
 OBJS = $(SRCS:.c=.o)
-
-DATA = uninstall_hashlib.sql
-DATA_built = hashlib.sql
+EXTENSION = $(MODULE_big)
 
 DOCS = pghashlib.html
 EXTRA_CLEAN = pghashlib.html
 
-REGRESS = test_hash
 REGRESS_OPTS = --inputdir=test
 
+# different vars for extension and plain module
+
+Regress_noext = test_init_noext test_hash
+Regress_ext   = test_init_ext   test_hash
+
+Data_noext = sql/hashlib.sql sql/uninstall_hashlib.sql
+Data_ext = sql/hashlib--1.0.sql sql/hashlib--unpackaged--1.0.sql
+
+
+# Work around PGXS deficiencies - switch variables based on
+# whether extensions are supported.
+PgMajor = $(if $(MAJORVERSION),$(MAJORVERSION),8.3)
+PgHaveExt = $(if $(filter 8.% 9.0,$(PgMajor)),noext,ext)
+DATA = $(Data_$(PgHaveExt))
+REGRESS = $(Regress_$(PgHaveExt))
+
+
+# launch PGXS
 PGXS = $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 

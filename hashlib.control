@@ -1,0 +1,6 @@
+# hashlib extension
+comment = 'Stable hash functions'
+default_version = '1.0'
+module_pathname = '$libdir/hashlib'
+relocatable = true
+superuser = false

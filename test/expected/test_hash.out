@@ -1,4 +1,3 @@
-\set ECHO none
 select hash_string('', 'crc32');
  hash_string 
 -------------
