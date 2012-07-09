@@ -1,0 +1,18 @@
+Source: pghashlib
+Section: database
+Priority: extra
+Maintainer: Marko Kreen <marko.kreen@skype.net>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+Homepage: https://github.com/markokr/pghashlib
+Vcs-Git: git://github.com/markokr/pghashlib.git
+Vcs-Browser: https://github.com/markokr/pghashlib
+
+Package: postgresql-hashlib-PGVERSION
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION
+Breaks: postgresql-PGVERSION-hashlib
+Replaces: postgresql-PGVERSION-hashlib
+Description: Stable hash functions for PostgreSQL
+ Various text hashing functions.
+

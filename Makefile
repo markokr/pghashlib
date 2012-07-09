@@ -54,3 +54,11 @@ html: hashlib.html
 hashlib.html: README.rst
 	$(RST2HTML) $< > $@
 
+deb:
+	debuild -uc -us -b
+
+debclean: clean
+	$(MAKE) -f debian/rules realclean
+	rm -f lib* hashlib.so* hashlib.a
+	rm -rf .deps
+
