@@ -1,7 +1,7 @@
 
 MODULE_big = hashlib
-SRCS = pghashlib.c crc32.c lookup2.c lookup3.c inthash.c murmur3.c \
-       pgsql84.c city.c spooky.c md5.c
+SRCS = src/pghashlib.c src/crc32.c src/lookup2.c src/lookup3.c src/inthash.c \
+       src/murmur3.c src/pgsql84.c src/city.c src/spooky.c src/md5.c
 OBJS = $(SRCS:.c=.o)
 DATA = uninstall_hashlib.sql
 DATA_built = hashlib.sql
@@ -27,7 +27,7 @@ ack:
 	cp results/*.out test/expected/
 
 tags:
-	cscope -I . -b -f .cscope.out *.c
+	cscope -I . -b -f .cscope.out src/*.c
 
 %.s: %.c
 	$(CC) -S -fverbose-asm -o - $< $(CFLAGS) $(CPPFLAGS) | cleanasm > $@
