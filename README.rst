@@ -19,7 +19,7 @@ You need PostgreSQL developent environment.  Then simply::
 
   $ make
   $ make install
-  $ psql -d ... -f hashlib.sql
+  $ psql -d ... -c "create extension hashlib"
 
 
 Functions

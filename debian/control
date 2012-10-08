@@ -2,7 +2,7 @@ Source: pghashlib
 Section: database
 Priority: extra
 Maintainer: Marko Kreen <marko.kreen@skype.net>
-Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends: debhelper (>= 7.0.50~), python-docutils, postgresql-server-dev-all
 Standards-Version: 3.9.1
 Homepage: https://github.com/markokr/pghashlib
 Vcs-Git: git://github.com/markokr/pghashlib.git
