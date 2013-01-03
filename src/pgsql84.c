@@ -146,7 +146,7 @@ void hlib_pgsql84(const void *data, size_t keylen, uint64_t *io)
 
 	/* Set up the internal state */
 	len = keylen;
-	a = b = c = 0x9e3779b9 + len + 3923095;
+	a = b = c = 0x9e3779b9 + len + 3923095 + io[0];
 
 	/* If the source pointer is word-aligned, we use word-wide fetches */
 	if (((intptr_t) k & UINT32_ALIGN_MASK) == 0)
