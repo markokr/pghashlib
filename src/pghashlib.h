@@ -45,6 +45,7 @@ void hlib_cityhash64(const void *data, size_t len, uint64_t *io);
 void hlib_cityhash128(const void *data, size_t len, uint64_t *io);
 void hlib_spookyhash(const void *data, size_t len, uint64_t *io);
 void hlib_md5(const void *data, size_t len, uint64_t *io);
+void hlib_siphash24(const void *data, size_t len, uint64_t *io);
 
 /* integer hashes */
 uint32_t hlib_int32_jenkins(uint32_t data);

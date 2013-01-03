@@ -83,21 +83,22 @@ String hashing algorithms
 
 List of currently provided algorithms.
 
-==============  =========  ======  =======  ==============================
- Algorithm      CPU-indep   Bits   Partial  Description
-==============  =========  ======  =======  ==============================
- city64          no          64      no      CityHash64
- city128         no         128      no      CityHash128
- crc32           yes         32     yes      CRC32
- lookup2         no          64      no      Jenkins lookup2
- lookup3be       yes         64      no      Jenkins lookup3 big-endian
- lookup3le       yes         64      no      Jenkins lookup3 little-endian
- lookup3         no          64      no      Jenkins lookup3 CPU-native
- murmur3         no          32      no      MurmurHash v3, 32-bit variant
- md5             yes        128      no      MD5
- pgsql84         no          64      no      Hacked lookup3 in Postgres 8.4+
- spooky          no         128      no      SpookyHash
-==============  =========  ======  =======  ==============================
+==============  =========  ======  =======  =======  ==============================
+ Algorithm      CPU-indep   Bits   IV bits  Partial   Description
+==============  =========  ======  =======  =======  ==============================
+ city64          no          64       64       no     CityHash64
+ city128         no         128      128       no     CityHash128
+ crc32           yes         32       32      yes     CRC32
+ lookup2         no          64       32       no      Jenkins lookup2
+ lookup3be       yes         64       32       no      Jenkins lookup3 big-endian
+ lookup3le       yes         64       32       no      Jenkins lookup3 little-endian
+ lookup3         no          64       32       no      Jenkins lookup3 CPU-native
+ murmur3         no          32       32       no      MurmurHash v3, 32-bit variant
+ md5             yes        128      128       no      MD5
+ pgsql84         no          64        0       no      Hacked lookup3 in Postgres 8.4+
+ siphash24       yes         64      128       no      SipHash-2-4
+ spooky          no         128      128       no      SpookyHash
+==============  =========  ======  =======  =======  ==============================
 
 CPU-independence
   Whether hash output is independent of CPU endianess.  If not, then
@@ -108,6 +109,9 @@ Bits
   Maximum number of output bits that hash can output.
   If longer result is requested, result will be
   zero-padded.
+
+IV bits
+  Maximum number of input bits for "initial value".
 
 Partial hashing
   Whether long string can be hashed in smaller parts, by giving last
@@ -161,3 +165,6 @@ Links
 
 .. __: http://www.burtleburtle.net/bob/hash/spooky.html
 
+* `SipHash-2-4`__ by Jean-Philippe Aumasson and Daniel J. Bernstein.
+
+.. __: https://131002.net/siphash/

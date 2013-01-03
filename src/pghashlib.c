@@ -46,6 +46,7 @@ static const struct StrHashDesc string_hash_list[] = {
 #endif
 	{ 9, "lookup3le",	hlib_lookup3_hashlittle, 0 },
 	{ 9, "lookup3be",	hlib_lookup3_hashbig,	0 },
+	{ 9, "siphash24",	hlib_siphash24, 0 },
 	{ 7, "murmur3",		hlib_murmur3, 0 },
 	{ 6, "city64",		hlib_cityhash64, 0 },
 	{ 7, "city128",		hlib_cityhash128, 0 },
