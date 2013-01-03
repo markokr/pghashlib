@@ -23,7 +23,7 @@ debian/control-stamp: debian/control debian/control.in debian/pgversions debian/
 #	done
 #	touch $@
 
-clean: debian/control-stamp
+override_dh_auto_clean: debian/control-stamp
 	for v in $$($(PG_BUILDEXT) supported-versions . ) ; do \
 		rm -rf debian/postgresql-hashlib-$${v}; \
 	done
