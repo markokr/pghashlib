@@ -20,8 +20,9 @@ Regress_noext = test_init_noext test_hash
 Regress_ext   = test_init_ext   test_hash
 
 Data_noext = sql/hashlib.sql sql/uninstall_hashlib.sql
-Data_ext = sql/hashlib--1.0.sql sql/hashlib--unpackaged--1.0.sql
-
+Data_ext = sql/hashlib--1.0.sql sql/hashlib--unpackaged--1.0.sql \
+	   sql/hashlib--1.1.sql sql/hashlib--unpackaged--1.1.sql \
+	   sql/hashlib--1.0--1.1.sql
 
 # Work around PGXS deficiencies - switch variables based on
 # whether extensions are supported.
