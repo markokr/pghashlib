@@ -2,6 +2,11 @@
 PG_CONFIG = pg_config
 RST2HTML = rst2html
 
+# load version
+include hashlib.control
+EXT_VERSION = $(patsubst '%',%,$(default_version))
+DISTNAME = pghashlib-$(EXT_VERSION)
+
 # module description
 MODULE_big = hashlib
 SRCS = src/pghashlib.c src/crc32.c src/lookup2.c src/lookup3.c \
@@ -65,4 +70,7 @@ debclean: clean
 	$(MAKE) -f debian/rules realclean
 	rm -f lib* hashlib.so* hashlib.a
 	rm -rf .deps
+
+tgz:
+	git archive --prefix=$(DISTNAME)/ HEAD | gzip -9 > $(DISTNAME).tar.gz
 
