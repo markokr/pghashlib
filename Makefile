@@ -55,6 +55,8 @@ hashlib.html: README.rst
 	$(RST2HTML) $< > $@
 
 deb:
+	rm -f debian/control
+	make -f debian/rules debian/control
 	debuild -uc -us -b
 
 debclean: clean
