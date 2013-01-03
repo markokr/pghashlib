@@ -162,7 +162,7 @@ static inline uint64_t swap64(uint64_t x)
  * Public functions
  */
 
-/* hash_string(bytea, text [, int4]) returns int8 */
+/* hash_string(bytea, text [, int4]) returns int4 */
 Datum
 pg_hash_string(PG_FUNCTION_ARGS)
 {
@@ -186,7 +186,7 @@ pg_hash_string(PG_FUNCTION_ARGS)
 		err_nohash(hashname);
 
 	/* decide initval */
-	if (PG_NARGS() == 3)
+	if (PG_NARGS() >= 3)
 		io[0] = PG_GETARG_INT32(2);
 	else
 		io[0] = desc->initval;
@@ -200,7 +200,7 @@ pg_hash_string(PG_FUNCTION_ARGS)
 	PG_RETURN_INT32(io[0]);
 }
 
-/* hash64_string(bytea, text [, int8]) returns int8 */
+/* hash64_string(bytea, text [, int8 [, int8]]) returns int8 */
 Datum
 pg_hash64_string(PG_FUNCTION_ARGS)
 {
@@ -223,8 +223,10 @@ pg_hash64_string(PG_FUNCTION_ARGS)
 	if (desc == NULL)
 		err_nohash(hashname);
 
-	/* decide initval */
-	if (PG_NARGS() == 3)
+	/* decide initvals */
+	if (PG_NARGS() >= 4)
+		io[1] = PG_GETARG_INT64(3);
+	if (PG_NARGS() >= 3)
 		io[0] = PG_GETARG_INT64(2);
 	else
 		io[0] = desc->initval;

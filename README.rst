@@ -41,8 +41,8 @@ hash64_string
 
 ::
 
-  hash64_string(data text, algo text, [, initval int4]) returns int8
-  hash64_string(data byte, algo text, [, initval int4]) returns int8
+  hash64_string(data text, algo text, [, iv1 int8 [, iv2 int8]]) returns int8
+  hash64_string(data byte, algo text, [, iv1 int8 [, iv2 int8]]) returns int8
 
 Uses same algorithms as `hash_string()` but returns 64-bit result.
 
