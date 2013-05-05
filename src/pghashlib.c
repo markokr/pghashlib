@@ -144,21 +144,6 @@ err_nohash(text *hashname)
 	elog(ERROR, "hash '%s' not found", name);
 }
 
-static inline uint32_t swap32(uint32_t x)
-{
-#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
-	return __builtin_bswap32(x);
-#else
-	x = ((x << 8) & 0xFF00FF00) | ((x >> 8) & 0x00FF00FF);
-	return (x << 16) | (x >> 16);
-#endif
-}
-
-static inline uint64_t swap64(uint64_t x)
-{
-	return ((uint64_t)swap32(x) << 32) | swap32(x >> 32);
-}
-
 /*
  * Public functions
  */
@@ -278,10 +263,8 @@ pg_hash128_string(PG_FUNCTION_ARGS)
 	PG_FREE_IF_COPY(hashname, 1);
 
 	/* always output little-endian */
-#ifdef WORDS_BIGENDIAN
-	io[0] = swap64(io[0]);
-	io[1] = swap64(io[1]);
-#endif
+	io[0] = htole64(io[0]);
+	io[1] = htole64(io[1]);
 
 	res = palloc(VARHDRSZ + 16);
 	SET_VARSIZE(res, VARHDRSZ + 16);

@@ -46,15 +46,6 @@
 // compromising on hash quality.
 
 #include "pghashlib.h"
-#if 0
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-#include <endian.h>
-#if BYTE_ORDER == BIG_ENDIAN
-#define WORDS_BIGENDIAN
-#endif
-#endif
 
 #if defined __GNUC__ && __GNUC__ >= 3
 #define HAVE_BUILTIN_EXPECT 1
@@ -69,32 +60,8 @@ typedef struct city_uint128 uint128;
 static inline uint64_t Uint128Low64(const uint128 x) { return x.first; }
 static inline uint64_t Uint128High64(const uint128 x) { return x.second; }
 
-#if !defined(WORDS_BIGENDIAN)
-
-#define uint32_in_expected_order(x) (x)
-#define uint64_in_expected_order(x) (x)
-
-#else
-
-#ifdef _MSC_VER
-#include <stdlib.h>
-#define bswap_32(x) _byteswap_ulong(x)
-#define bswap_64(x) _byteswap_uint64(x)
-
-#elif defined(__APPLE__)
-// Mac OS X / Darwin features
-#include <libkern/OSByteOrder.h>
-#define bswap_32(x) OSSwapInt32(x)
-#define bswap_64(x) OSSwapInt64(x)
-
-#else
-#include <byteswap.h>
-#endif
-
-#define uint32_in_expected_order(x) (bswap_32(x))
-#define uint64_in_expected_order(x) (bswap_64(x))
-
-#endif				// WORDS_BIGENDIAN
+#define uint32_in_expected_order(x) le32toh(x)
+#define uint64_in_expected_order(x) le64toh(x)
 
 #if !defined(LIKELY)
 #if HAVE_BUILTIN_EXPECT

@@ -15,6 +15,11 @@
 #error "PostgreSQL 8.3+ required"
 #endif
 
+/* sometimes <endian.h> comes via <sys/types.h> */
+#ifndef le64toh
+#include "compat-endian.h"
+#endif
+
 /*
  * Does architecture support unaligned reads?
  *

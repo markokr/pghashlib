@@ -16,8 +16,6 @@
 
 #include "pghashlib.h"
 
-#include <endian.h>
-
 static inline uint64_t rol64(uint64_t v, int s)
 {
 	return (v << s) | (v >> (64 - s));
