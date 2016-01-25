@@ -55,12 +55,12 @@ struct city_uint128 {
 	uint64 first;
 	uint64 second;
 };
-typedef struct city_uint128 uint128;
+typedef struct city_uint128 city_uint128;
 
 //typedef std::pair<uint64, uint64> uint128;
 
-static inline uint64 Uint128Low64(const uint128 x) { return x.first; }
-static inline uint64 Uint128High64(const uint128 x) { return x.second; }
+static inline uint64 Uint128Low64(const city_uint128 x) { return x.first; }
+static inline uint64 Uint128High64(const city_uint128 x) { return x.second; }
 
 // Hash function for a byte array.
 uint64 CityHash64(const char *buf, size_t len);
@@ -75,15 +75,15 @@ uint64 CityHash64WithSeeds(const char *buf, size_t len,
                            uint64 seed0, uint64 seed1);
 
 // Hash function for a byte array.
-uint128 CityHash128(const char *s, size_t len);
+city_uint128 CityHash128(const char *s, size_t len);
 
 // Hash function for a byte array.  For convenience, a 128-bit seed is also
 // hashed into the result.
-uint128 CityHash128WithSeed(const char *s, size_t len, uint128 seed);
+city_uint128 CityHash128WithSeed(const char *s, size_t len, city_uint128 seed);
 
 // Hash 128 input bits down to 64 bits of output.
 // This is intended to be a reasonably good hash function.
-static inline uint64 Hash128to64(const uint128 x) {
+static inline uint64 Hash128to64(const city_uint128 x) {
   uint64 a, b;
   // Murmur-inspired hashing.
   const uint64 kMul = 0x9ddfea08eb382d69ULL;
@@ -101,11 +101,11 @@ static inline uint64 Hash128to64(const uint128 x) {
 //
 
 // Hash function for a byte array.
-uint128 CityHashCrc128(const char *s, size_t len);
+city_uint128 CityHashCrc128(const char *s, size_t len);
 
 // Hash function for a byte array.  For convenience, a 128-bit seed is also
 // hashed into the result.
-uint128 CityHashCrc128WithSeed(const char *s, size_t len, uint128 seed);
+city_uint128 CityHashCrc128WithSeed(const char *s, size_t len, city_uint128 seed);
 
 // Hash function for a byte array.  Sets result[0] ... result[3].
 void CityHashCrc256(const char *s, size_t len, uint64 *result);
