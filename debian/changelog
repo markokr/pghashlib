@@ -1,3 +1,9 @@
+pghashlib (1.1-2) UNRELEASED; urgency=medium
+
+  * Refresh Debian packaging to work with current Debian tools and practices.
+
+ -- Martín Ferrari <tincho@debian.org>  Mon, 09 Apr 2018 10:55:15 +0000
+
 pghashlib (1.1-1) unstable; urgency=low
 
   * v1.1
