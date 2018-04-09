@@ -1,10 +1,20 @@
 Source: pghashlib
 Section: database
-Priority: extra
+Priority: optional
 Maintainer: Marko Kreen <marko.kreen@skype.net>
-Build-Depends: debhelper (>= 7.0.50~), python-docutils, postgresql-server-dev-all
-Standards-Version: 3.9.1
+Build-Depends: debhelper (>= 11),
+               postgresql-server-dev-all (>= 153~),
+               python-docutils,
+Standards-Version: 4.1.3
 Homepage: https://github.com/markokr/pghashlib
-Vcs-Git: git://github.com/markokr/pghashlib.git
+Vcs-Git: https://github.com/markokr/pghashlib
 Vcs-Browser: https://github.com/markokr/pghashlib
 
+Package: postgresql-9.6-pghashlib
+Architecture: any
+Depends: postgresql-9.6,
+         ${misc:Depends},
+         ${shlibs:Depends},
+Description: Stable hash functions for PostgreSQL
+ Provide stable hash functions for PostgreSQL, "stable" in the sense that their
+ implementation does not change, they are independent from PostgeSQL version.
